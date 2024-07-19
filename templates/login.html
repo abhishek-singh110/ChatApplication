@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for character set and viewport settings -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Page title -->
+    <title>Login</title>
+    
+    <!-- Linking the CSS stylesheet for login form -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+    <div class="signup-container">
+        <!-- Login form heading -->
+        <h1>Login</h1>
+        
+        <!-- Display messages, if any (e.g., errors or notifications) -->
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <!-- Login form -->
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <!-- Input fields for user login details -->
+            <input type="text" placeholder="Username" name="username" required>
+            <input type="password" placeholder="Password" name="password" required>
+            
+            <!-- Login button -->
+            <button type="submit">Login</button>
+        </form>
+        
+        <!-- Link to the signup page for new users -->
+        <a href="{% url 'register' %}" class="login-link">Don't have an Account? SignUp Now!</a>
+        
+        <!-- Footer -->
+        <div class="footer">
+            © 2024 Chatting Signup Form. All rights reserved | Design by Abhishek Singh
+        </div>
+    </div>
+</body>
+</html>

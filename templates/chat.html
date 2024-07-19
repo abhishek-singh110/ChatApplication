@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for character set and viewport settings -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Page title with recipient's username -->
+    <title>Chat with {{ recipient.username }}</title>
+    
+    <!-- Linking the CSS stylesheet for chat page -->
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+</head>
+
+<body>
+    <div class="chat-container">
+        <!-- Chat header with back button and chat title -->
+        <div class="chat-header">
+            <button id="back-button" onclick="goBack()">&#8592; Back</button>
+            <h2>Chat with {{ recipient.username }}</h2>
+        </div>
+
+        <!-- Chat log to display messages -->
+        <div id="chat-log">
+            {% for message in messages %}
+                <div class="message {% if message.sender.username == request.user.username %}sent{% else %}received{% endif %}">
+                    <strong>{{ message.sender.username }}:</strong> {{ message.message }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Chat input area -->
+        <div class="chat-input">
+            <textarea id="chat-message-input" placeholder="Type a message..."></textarea>
+            <button id="chat-message-submit">Send</button>
+        </div>
+    </div>
+
+    <script>
+        let chatSocket;
+        const currentUser = '{{ request.user.username }}';
+        
+        // Function to connect to WebSocket
+        function connectWebSocket() {
+            chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/ws/chat/' + '{{ recipient.id }}' + '/'
+            );
+
+            chatSocket.onopen = function(e) {
+                console.log('WebSocket connection established');
+            };
+
+            // Handle incoming messages
+            chatSocket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                // Only append the message if it's from the other user
+                if (data.sender !== currentUser) {
+                    appendMessage(data.sender, data.message);
+                }
+            };
+
+            // Handle WebSocket closure and attempt reconnection
+            chatSocket.onclose = function(e) {
+                console.error('Chat socket closed unexpectedly');
+                setTimeout(connectWebSocket, 1000); // Try to reconnect after 1 second
+            };
+        }
+
+        // Initial WebSocket connection
+        connectWebSocket();
+
+        const chatLog = document.querySelector('#chat-log');
+
+        // Function to append message to chat log
+        function appendMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ' + (sender === currentUser ? 'sent' : 'received');
+            messageDiv.innerHTML = '<strong>' + sender + ':</strong> ' + message;
+            chatLog.appendChild(messageDiv);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        // Focus on chat input field
+        document.querySelector('#chat-message-input').focus();
+
+        // Send message on Enter key press
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13 && !e.shiftKey) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+                e.preventDefault();
+            }
+        };
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value.trim();
+            if (message) {
+                if (chatSocket.readyState === WebSocket.OPEN) {
+                    chatSocket.send(JSON.stringify({
+                        'message': message,
+                        'user': '{{ request.user.id }}'
+                    }));
+                    // Immediately append the sent message for the sender
+                    appendMessage(currentUser, message);
+                    messageInputDom.value = '';
+                } else {
+                    alert('Connection lost. Trying to reconnect...');
+                    connectWebSocket();
+                }
+            }
+        };
+
+        // Function to navigate back to the previous page
+        function goBack() {
+        window.history.back();
+    }
+    </script>
+</body>
+</html>

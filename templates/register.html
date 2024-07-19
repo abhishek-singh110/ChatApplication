@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for character set and viewport settings -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Page title -->
+    <title>SignUp</title>
+    
+    <!-- Linking the CSS stylesheet for signup form -->
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+
+<body>
+    <div class="signup-container">
+        <!-- Signup form heading -->
+        <h1>SignUp</h1>
+
+        <!-- Display messages, if any (e.g., errors or notifications) -->
+        {% if message %}
+            {{ message }}
+        {% endif %}
+        
+        <!-- Signup form -->
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <!-- Input fields for user registration details -->
+            <input type="text" placeholder="Username" name="username" required>
+            <input type="email" placeholder="Email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+            title="Please enter a valid email address. Example: user@example.com">
+            <input type="password" placeholder="Password" name="password" required>
+            <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
+            
+            <!-- Signup button -->
+            <button type="submit">SIGNUP</button>
+        </form>
+        
+        <!-- Link to the login page for existing users -->
+        <a href="{% url 'login' %}" class="login-link">Already have an Account? Login Now!</a>
+        
+        <!-- Footer with information -->
+        <div class="footer">
+            © 2024 Chatting Signup Form. All rights reserved | Design by Abhishek Singh
+        </div>
+    </div>
+</body>
+</html>

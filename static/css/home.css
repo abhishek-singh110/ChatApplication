@@ -1,0 +1,159 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+h2 {
+    color: #2c3e50;
+    margin: 0;
+}
+.notification-icon {
+    font-size: 24px;
+    color: #3498db;
+    cursor: pointer;
+    position: relative;
+}
+.notification-count {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+.notification-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    z-index: 1000;
+}
+.notification-dropdown h3 {
+    margin: 0 0 15px;
+    color: #333;
+    font-size: 18px;
+}
+.invitation {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.invitation:last-child {
+    border-bottom: none;
+}
+.invitation-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #555;
+}
+.invitation-content {
+    flex-grow: 1;
+}
+.invitation-content p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+.invitation-content small {
+    font-size: 12px;
+    color: #777;
+}
+.invitation-actions {
+    display: flex;
+    gap: 8px;
+}
+.invitation-actions a {
+    text-decoration: none;
+    font-size: 18px;
+}
+.see-more {
+    text-align: center;
+    margin-top: 10px;
+    color: #3498db;
+    cursor: pointer;
+    font-size: 14px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    background-color: #ecf0f1;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.send-interest {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+.send-interest:hover {
+    background-color: #2980b9;
+}
+.interest-sent {
+    color: #27ae60;
+    font-weight: bold;
+}
+.chat-link {
+background-color: #4CAF50;
+color: white;
+padding: 8px 15px;
+text-decoration: none;
+border-radius: 5px;
+transition: background-color 0.3s;
+}
+.chat-link:hover {
+    background-color: #45a049;
+}
+.logout-button {
+    background-color: #ff4b5c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+.logout-button:hover {
+    background-color: #ff2c3c;
+}
