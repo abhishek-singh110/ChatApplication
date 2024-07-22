@@ -63,7 +63,6 @@ This Django application allows users to send interest messages to each other, ac
    - Start chatting in real-time with the other user.
 
 
-
 ## Notes
 
  - Currently, when an interest message is sent, notification is displayed on the notification icon. This is    
