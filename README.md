@@ -34,7 +34,7 @@ This Django application allows users to send interest messages to each other, ac
 3. Install the required packages:
 
    - pip install -r requirements.txt
-
+   - install redis on your machine and start the redis-server
 
 4. Run database migrations:
 
